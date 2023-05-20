@@ -142,7 +142,7 @@ print(f"Actual Width: {cap_area_width / INCHES_TO_MM:0.3} inches")
 def cap_matcher(img_array, circle_mask, cnt):
     """return the cap that best matches the circle"""
     best_score = 3 * 30 * 30 * 255
-    images = glob.glob("caps/*.png")
+    images = glob.glob("caps_generated/*.png")
 
     def score_func(Lchstd, image):
         # convert cap img to LCH space
@@ -236,7 +236,7 @@ def cap_matcher(img_array, circle_mask, cnt):
                 if score > best_score * 1.2:
                     break
                 # no caps placed on black background
-                if cap_img == "caps\\black.png":
+                if cap_img == "caps_generated\\black.png":
                     if score == 0.0:
                         best_score = score
                         best_cap = capnp
@@ -298,6 +298,6 @@ for coord in coords:
     # paste image in position on canvas
     composite.alpha_composite(wip_img, (xmin, ymin))
     cap_composite.alpha_composite(cap_match, (xmin, ymin))
-print(cnt)
+print(f"displacements: {cnt} (internal use)")
 composite.show()
 cap_composite.show()
